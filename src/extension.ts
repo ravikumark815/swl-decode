@@ -38,7 +38,8 @@ export function activate(context: vscode.ExtensionContext) {
 
 	});
 	let decodeAndCompareTwo = vscode.commands.registerCommand('extension.compareEXPWith', () => {
-		chooseFiles();
+		let chosenFiles: any = chooseFiles();
+		parseTwoFiles(chosenFiles);
 	});
 
 	context.subscriptions.push(
@@ -102,21 +103,22 @@ function openHidden(content: string, language?: string): any {
 }
 
 async function chooseFiles() {
-	let docArray: any[] = [];
 	const options: vscode.OpenDialogOptions = {
 		canSelectMany: true,
 		openLabel: 'Open',
 		filters: {
-			'EXP files': ['exp'],
-			'Text files': ['txt'],
-			'All files': ['*']
+			'EXP files': ['exp']
 		}
 	};
 	const chosenFiles = await vscode.window.showOpenDialog(options).then(fileUri => {
 		return fileUri;
 	});
-	if (chosenFiles) {
+	return chosenFiles;
+}
 
+async function parseTwoFiles(chosenFiles:any) {
+	let docArray: any[] = [];
+	if (chosenFiles) {
 		for (const file of chosenFiles) {
 			const fileDoc = await vscode.workspace.openTextDocument(file);
 			docArray.push(await openHidden(decodeExp(fileDoc)));
