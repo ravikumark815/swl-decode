@@ -22,7 +22,7 @@ export function activate(context: vscode.ExtensionContext) {
 		// The code you place here will be executed every time your command is executed
 
 		// Display a message box to the user
-		vscode.window.showInformationMessage('Decoding EXP!');
+		vscode.window.showInformationMessage('Decoding EXP...');
 		let editor = vscode.window.activeTextEditor;
 		if(!editor){
 			return;
@@ -60,7 +60,13 @@ function decodeExp(editor: vscode.TextEditor, doc: vscode.TextDocument){
 		// 	editBuilder.replace(all,decodedStr)
 		// });
 		// editor.edit(eb => eb.replace(all, decodedStr));
-		openInUntitled(decodedStr);
+		if(decodedStr.startsWith('checksum')){
+			openInUntitled(decodedStr);
+			vscode.window.showInformationMessage('Decoded EXP!');
+		}
+		else{
+			vscode.window.showErrorMessage("Oops! Doesn't look you're trying to decode a valid backup file!");
+		}
 	});
 }
 async function openInUntitled(content: string, language?: string) {

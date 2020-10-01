@@ -29,7 +29,14 @@
 				"key": "ctrl+r ctrl+d",
 				"when": "editorTextFocus"
 			}
-		]
+		],
+		"menus": {
+			"editor/context": [
+				{
+				  "command": "extension.decodeEXP"
+				}
+			  ]
+		  }
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
