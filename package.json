@@ -1,8 +1,8 @@
 {
 	"name": "exp-decoder",
 	"displayName": "EXP decoder",
-	"description": "Decode SonicWall Firewall backup config ( EXP ) files",
-	"version": "0.0.3",
+	"description": "Decode SonicWall configuration/preferences file(Extension: .exp)",
+	"version": "0.0.9",
 	"publisher": "varunsudarshan",
 	"repository": {
 		"type": "git",
@@ -15,18 +15,35 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.decodeEXP"
+		"onCommand:extension.decodeEXP",
+		"onCommand:extension.encodeEXP",
+		"onCommand:extension.compareEXPWith"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
-		"commands": [{
-			"command": "extension.decodeEXP",
-			"title": "Decode EXP"
-		}],
+		"commands": [
+			{
+				"command": "extension.decodeEXP",
+				"title": "Decode EXP"
+			},
+			{
+				"command": "extension.encodeEXP",
+				"title": "Encode EXP"
+			},
+			{
+				"command": "extension.compareEXPWith",
+				"title": "Compare Two EXP files"
+			}
+		],
 		"keybindings": [
 			{
 				"command": "extension.decodeEXP",
 				"key": "ctrl+r ctrl+d",
+				"when": "editorTextFocus"
+			},
+			{
+				"command": "extension.encodeEXP",
+				"key": "ctrl+r ctrl+e",
 				"when": "editorTextFocus"
 			}
 		],
@@ -34,6 +51,9 @@
 			"editor/context": [
 				{
 				  "command": "extension.decodeEXP"
+				},
+				{
+					"command": "extension.encodeEXP"
 				}
 			  ]
 		  }
