@@ -53,8 +53,12 @@ function decodeExp(doc: vscode.TextDocument): string {
 	let b= Buffer.from(filestr, 'base64');
 	let decodedStr = b.toString();
 	let regExp = new RegExp('&', "g");
+	let regExpEq = new RegExp('=', "g");
 	decodedStr = decodedStr.replace(
 		regExp, "\n"
+	);
+	decodedStr = decodedStr.replace(
+		regExpEq, " : = "
 	);
 	const all = new vscode.Range(
 		doc.positionAt(0),
@@ -79,7 +83,7 @@ function encodeEXP(doc: vscode.TextDocument): string {
 		doc.positionAt(0),
 		doc.positionAt(doc.getText().length)
 	);
-	encodedStr = Buffer.from(encodedStr, 'binary').toString('base64') + "&&";
+	encodedStr = Buffer.from(encodedStr, 'binary').toString('base64') + "&";
 	return encodedStr;
 }
 async function openInUntitled(content: string, language?: string) {
